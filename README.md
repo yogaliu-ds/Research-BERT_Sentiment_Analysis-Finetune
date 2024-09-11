@@ -1,26 +1,28 @@
-# PyTorch Model Training with AdamW Optimizer
+# Sentiment Analysis by Fine-Tuning BERT
 
-This repository contains a PyTorch implementation for training and evaluating a model using the AdamW optimizer and a linear learning rate scheduler. The code supports fine-tuning with cross-entropy loss and gradient clipping.
+This repository demonstrates how to fine-tune a BERT model for sentiment analysis using PyTorch, AdamW optimizer, and a linear learning rate scheduler. The code is structured to support fine-tuning with cross-entropy loss, gradient clipping, and model checkpointing.
 
 ## Features
-- **AdamW Optimizer**: Utilizes the AdamW optimizer with a linear warmup schedule.
-- **Cross-Entropy Loss**: Designed for classification tasks.
-- **Gradient Clipping**: Prevents gradient explosion by clipping gradients to a max norm.
-- **Model Checkpointing**: Saves the best model based on validation accuracy.
+- **AdamW Optimizer**: Utilizes AdamW with a linear warmup schedule for learning rate adjustment.
+- **Cross-Entropy Loss**: Used for classification tasks.
+- **Gradient Clipping**: Ensures gradient norms are capped to prevent explosion.
+- **Model Checkpointing**: Automatically saves the best model based on validation accuracy.
 
+## Training Process
 
-# Training Process
+1. **Set Up Optimizer and Scheduler**:
+   - Optimizer: AdamW (`lr=2e-5`)
+   - Scheduler: Linear warmup with total training steps based on the data loader size.
 
-    Set Up Optimizer and Scheduler:
-        Optimizer: AdamW (lr=2e-5)
-        Scheduler: Linear warmup with total training steps based on data loader size.
+2. **Loss Function**:
+   - Loss: `CrossEntropyLoss` for classification tasks.
 
-    Loss Function:loss_fn = nn.CrossEntropyLoss().to(device)
+3. **Training Loop**:
+   - For each epoch:
+     - Perform a forward pass with the input data.
+     - Compute the loss and predictions.
+     - Backward propagate the loss and update the model using the optimizer.
+     - Clip the gradients to prevent overflow.
 
-    Training Loop: Each epoch performs the following steps:
-        Forward pass with input data
-        Compute loss and predictions
-        Backward pass and optimizer step
-        Gradient clipping
-
-    Evaluation Loop: After each epoch, the model is evaluated on the validation set to track accuracy and loss.
+4. **Evaluation Loop**:
+   - After each epoch, evaluate the model on the validation set, tracking both accuracy and loss.
